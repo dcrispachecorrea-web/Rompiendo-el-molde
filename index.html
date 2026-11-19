@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -81,20 +81,173 @@ section>.x{top:84px;right:20px;width:28px;height:28px;line-height:28px}
 #dlg textarea{height:90px;padding:8px;border:1px solid #ccc;border-radius:6px;font:inherit}
 #dlg>div>div{display:flex;gap:8px;justify-content:flex-end}#dlg button{padding:8px 14px;border-radius:8px;border:1px solid #ccc;background:#f7f4ee;cursor:pointer;font-weight:600}#dlg .ok{background:#1b3a6b;color:#fff;border-color:#1b3a6b}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;z-index:120;background:#1f2937;color:#fff;padding:10px 16px;border-radius:8px;font-size:.82rem;max-width:90vw}
+</style>
+</head>
+<body>
+<nav><div class="logo">Brújula <span>Ética</span></div>
+<ul><li><a href="#inicio">Inicio</a></li><li><a href="#equipo">Equipo</a></li><li><a href="#manifiesto">Manifiesto</a></li><li><a href="#podcast">Podcast</a></li><li><a href="#video">Video-reacción</a></li><li><a href="#infografia">Infografía</a></li></ul></nav>
 
-/* ===== Compartir (menú estilo Google Drive) ===== */
-.navr{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.share-wrap{position:relative}
-.share-btn{display:inline-flex;align-items:center;gap:7px;font:600 .72rem 'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#1b1b1b;background:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:8px 15px;cursor:pointer;transition:filter .2s,transform .2s}
-.share-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.share-btn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
-.share-btn svg{width:14px;height:14px;fill:currentColor}
-.share-menu{position:absolute;right:0;top:calc(100% + 10px);width:min(370px,calc(100vw - 32px));max-height:min(72vh,440px);overflow:auto;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:12px;box-shadow:0 16px 44px #0004;padding:10px;display:none;z-index:80;text-align:left}
-.share-menu.open{display:block;animation:smIn .16s ease}
-@keyframes smIn{from{opacity:0;transform:translateY(-6px)}}
-.share-head{font:600 1.08rem 'Cormorant Garamond',serif;color:var(--navy);padding:6px 8px 2px}
-.share-access{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--mu);padding:0 8px 9px;border-bottom:1px solid var(--bd);margin-bottom:6px}
-.share-access svg{width:12px;height:12px;fill:currentColor;flex:0 0 auto}
-.share-item{display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;background:none;border:0;border-radius:9px;padding:10px 8px;cursor:pointer;color:var(--tx);font-family:'DM Sans',sans-serif}
-.share-item:hover{background:var(--cream)}
-.share-item:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+<div id="bg"></div>
+<div id="app">
+<section id="inicio">
+<div class="badge">✦ Ética y Deontología Profesional · 2026-I</div>
+<h1>Brújula<br><em>Ética</em></h1>
+<p class="q" style="color:var(--mu)">Portafolio Digital de Identidad Ética Profesional</p>
+<p class="lead" style="margin-top:20px">Este portafolio documenta nuestro recorrido ético a lo largo del semestre: desde la construcción de nuestra identidad profesional hasta el compromiso con las generaciones futuras y el entorno.</p>
+<div class="meta"><div><b>Curso</b><span>Ética y Deontología Profesional</span></div><div><b>Carrera</b><span>[Nombre de la carrera]</span></div><div><b>Semestre</b><span>2026-I</span></div><div><b>Docente</b><span>[Nombre del docente]</span></div></div>
+</section>
+
+<section id="equipo">
+<div class="tag">Nuestro equipo</div><h2>Quiénes <em>somos</em></h2>
+<p class="lead">Cinco estudiantes comprometidos con una práctica profesional íntegra, responsable y consciente de su impacto en la sociedad peruana.</p>
+<div class="grid5" id="team"></div>
+</section>
+
+<section id="manifiesto">
+<div class="two"><div>
+<div class="tag">Módulo I · Semana 5</div><h2>Manifiesto de <em>Identidad Ética</em></h2>
+<p class="lead">Nuestra declaración de propósito profesional: quiénes somos, qué valores guían nuestro ejercicio y a quiénes nos comprometemos a proteger.</p>
+<div class="lab">Jerarquía de valores (Scheler)</div>
+<div class="val"><i>I</i><span>[Valor 1] · [Tipo de valor]</span></div><div class="val"><i>II</i><span>[Valor 2] · [Tipo de valor]</span></div><div class="val"><i>III</i><span>[Valor 3] · [Tipo de valor]</span></div><div class="val"><i>IV</i><span>[Valor 4] · [Tipo de valor]</span></div>
+</div><div>
+<div class="quote"><div class="lab">✦ Nuestra metáfora artística</div><em>“[Describe aquí la metáfora artística elegida por el equipo y su relación con el propósito profesional del grupo.]”</em></div>
+<div class="blk"><h4>Propósito profesional</h4><p>Redacta aquí el propósito colectivo del equipo: qué tipo de profesionales quieren ser, cuál es su telos y cómo entienden la excelencia (areté) en su campo.</p></div>
+<div class="blk"><h4>Poblaciones vulnerables que protegemos</h4><div class="chips"><span>[Población 1]</span><span>[Población 2]</span><span>[Población 3]</span><span>[Población 4]</span></div><p>Explica por qué estas poblaciones son relevantes para el ejercicio ético de su carrera.</p></div>
+<div class="blk"><h4>Mapa crítico profesional</h4><p>Describe las principales negligencias éticas identificadas en el ámbito laboral de la carrera y las propuestas de mejora del equipo.</p></div>
+</div></div>
+</section>
+
+<section id="podcast">
+<div class="tag">Módulo II · Semanas 6–7</div><h2>Podcast de <em>Dilema Moral</em></h2>
+<p class="lead">Un caso real del contexto peruano analizado desde dos marcos: el deber kantiano y el utilitarismo de Mill.</p>
+<div class="two eq"><div>
+<div class="lab">Episodio 01 · Dilema ético profesional</div><p class="q" style="margin-bottom:14px">[Título del episodio — describe el dilema en una frase]</p>
+<div class="slot short" data-hint="audio">🎙️ Toca aquí (modo edición) para pegar el enlace o embed del podcast</div>
+<div class="chips" style="margin-top:14px"><span>Kant · Ética del deber</span><span>Mill · Utilitarismo</span><span>[Carrera]</span><span>[Contexto peruano]</span></div>
+</div><div>
+<div class="quote"><div class="lab">El dilema analizado</div><em>“[Enuncia aquí el dilema ético real vinculado a tu campo profesional.]”</em></div>
+<div class="cols" style="margin-top:0"><div class="card"><h5>Perspectiva kantiana</h5><p>¿Qué haría el profesional si actuara por principio universal, no por conveniencia?</p></div><div class="card"><h5>Perspectiva utilitarista</h5><p>¿Qué acción produce el mayor bien para el mayor número de personas afectadas?</p></div></div>
+</div></div>
+</section>
+
+<section id="video">
+<div class="tag">Módulo III · Semana 12</div><h2>Video-reacción <em>crítico</em></h2>
+<p class="lead">Miramos nuestro propio podcast con ojos más maduros: ¿qué vacíos éticos identificamos? ¿Qué artículos del código deontológico deben humanizarse?</p>
+<div class="two v"><div>
+<div class="slot" data-hint="video">▶ Toca aquí (modo edición) para pegar el enlace de YouTube, Vimeo o Drive</div>
+<p class="q" style="margin-top:14px">[Título del video-reacción]</p><p class="lead" style="margin:4px 0 0">Duración: 8–10 min</p>
+</div><div>
+<div class="an"><div class="lab">Vacíos normativos identificados</div><p>Describe las situaciones del dilema que los códigos deontológicos no contemplan adecuadamente.</p></div>
+<div class="an"><div class="lab">Tensiones ético-legales</div><p>Explica los conflictos entre la obligación legal y la conciencia moral del profesional.</p></div>
+<div class="an"><div class="lab">Propuesta de humanización</div><p>Presenta los artículos o reformulaciones propuestas, fundamentadas filosóficamente.</p></div>
+<div class="an"><div class="lab">Reflexión sobre presión de decisión</div><p>Conecta con Weber (ética de la responsabilidad) y Levinas (alteridad).</p></div>
+</div></div>
+</section>
+
+<section id="infografia">
+<div class="tag">Módulo IV · Semanas 13–15</div><h2>Infografía de <em>Integridad y Sostenibilidad</em></h2>
+<p class="lead">Una sola pieza visual con dos capas integradas: el cuidado del otro y la responsabilidad con las generaciones futuras.</p>
+<div class="slot wide" data-hint="web">🗺️ Toca aquí (modo edición) para pegar el enlace o embed de Genially o Canva</div>
+<div class="cols">
+<div class="card"><div class="lab">✦ Capa 1 · Semana 13 · Ética del cuidado</div><p>Fotografía o pieza artística sobre la población vulnerable identificada y el compromiso de cuidado del equipo.</p><p style="margin-top:10px;color:var(--gold);font-weight:600">Compromiso: [Redactar compromiso concreto de cuidado]</p></div>
+<div class="card"><div class="lab">✦ Capa 2 · Semana 14 · Ecoética</div><p>Imagen generada con IA que une la población vulnerable con el conflicto ambiental y plantea la responsabilidad con las generaciones futuras.</p><p style="margin-top:10px;color:var(--gold);font-weight:600">Compromiso: [Redactar compromiso generacional concreto]</p></div>
+</div>
+</section>
+
+<footer><div><div class="logo">Brújula <span style="color:#c9a84c">Ética</span></div>Portafolio Digital · HUM-010 · Universidad Científica del Sur · 2026-I</div><div>Elaborado por: [Nombres del equipo]<br>Docente responsable: [Nombre del docente]</div></footer>
+</div>
+
+<div id="cp"><b>Personalizar</b>
+<label>Títulos <input type="color" id="ct" value="#1b3a6b"></label>
+<label>Texto <input type="color" id="cx" value="#6b7280"></label>
+<label>Texto seleccionado <input type="color" id="cs" value="#c9a84c"></label>
+<button id="cr">Restablecer colores</button><button id="ui">Subir imagen/GIF de fondo</button><button id="uv">Subir video de fondo</button></div>
+<div id="bar"><button id="bgb">🎨 Fondo: Ninguno</button><button id="cb">Aa Color</button><button id="tg">✎ Editar</button><button id="rs">Restablecer</button></div>
+
+<script>
+var K='brujula-etica-v1',app=document.getElementById('app'),T=document.getElementById('team');
+for(var i=0;i<5;i++)T.insertAdjacentHTML('beforeend','<div class="card"><div class="ph" title="Foto">👤</div><h4>Nombre Apellido</h4><small>[Carrera]</small><p>Breve reseña: intereses, motivación ética y aporte al equipo.</p><a class="li" href="https://linkedin.com/in/usuario" target="_blank">LinkedIn</a></div>');
+try{var s=localStorage.getItem(K);if(s)app.innerHTML=s}catch(e){}
+function save(){try{localStorage.setItem(K,clean())}catch(e){alert('No se pudo guardar: probablemente hay demasiadas imágenes pesadas.')}}
+app.addEventListener('input',save);
+var on=false,tg=document.getElementById('tg');
+tg.onclick=function(){on=!on;app.contentEditable=on;document.body.classList.toggle('edit',on);tg.classList.toggle('on',on);tg.textContent=on?'✓ Listo':'✎ Editar';ui(on);if(!on){save();navb()}};
+document.getElementById('rs').onclick=function(){ask(this,'¿Seguro? Toca de nuevo',function(){try{['','-bg','-img','-col'].forEach(function(x){localStorage.removeItem(K+x)});indexedDB.deleteDatabase('be-db')}catch(e){}location.reload()})};
+function embed(v,hint){v=v.trim();var m=v.match(/src=["']([^"']+)/);if(m)v=m[1];
+var y=v.match(/(?:youtu\.be\/|v=)([\w-]{11})/);if(y)v='https://www.youtube.com/embed/'+y[1];
+var vm=v.match(/vimeo\.com\/(\d+)/);if(vm)v='https://player.vimeo.com/video/'+vm[1];
+v=v.replace(/(drive\.google\.com\/file\/d\/[^/]+)\/view.*/,'$1/preview');
+if(/\.(mp3|m4a|wav|ogg)(\?|$)/i.test(v))return '<audio controls src="'+v+'"></audio>';
+return '<iframe src="'+v+'" allowfullscreen loading="lazy"></iframe>'}
+app.addEventListener('click',function(e){if(!on)return;
+var sl=e.target.closest('.slot');if(sl){askv(function(v){sl.innerHTML=embed(v,sl.dataset.hint);sl.contentEditable=false;save()});return}
+var ph=e.target.closest('.ph');if(ph){var f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=function(){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas'),k=Math.min(1,400/Math.min(im.width,im.height));c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);ph.innerHTML='<img src="'+c.toDataURL('image/jpeg',.8)+'">';save()};im.src=r.result};r.readAsDataURL(f.files[0])};f.click()}
+});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('section > *').forEach(function(el,i){el.classList.add('rv');el.style.transitionDelay=(i%5*80)+'ms';io.observe(el)});
+var bg=document.getElementById('bg'),bgb=document.getElementById('bgb'),M=['none','aurora','grad','part','img','vid'],N=['Ninguno','Aurora','Degradado','Partículas','Mi imagen/GIF','Mi video'],mi=0,raf;
+try{mi=+localStorage.getItem(K+'-bg')||0}catch(e){}
+function getImg(){try{return localStorage.getItem(K+'-img')}catch(e){return null}}
+function parts(){var c=document.createElement('canvas'),x=c.getContext('2d'),w,h,P=[];bg.appendChild(c);
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);
+var n=Math.min(70,Math.floor(w*h/18000));for(var i=0;i<n;i++)P.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5});
+(function f(){x.clearRect(0,0,w,h);x.fillStyle='#c9a84c';
+P.forEach(function(p,i){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,2,0,6.3);x.fill();
+for(var j=i+1;j<P.length;j++){var d=Math.hypot(p.x-P[j].x,p.y-P[j].y);if(d<130){x.strokeStyle='rgba(201,168,76,'+(1-d/130)*.5+')';x.beginPath();x.moveTo(p.x,p.y);x.lineTo(P[j].x,P[j].y);x.stroke()}}});
+raf=requestAnimationFrame(f)})()}
+function apply(){cancelAnimationFrame(raf);bg.className='';bg.innerHTML='';bg.removeAttribute('style');var m=M[mi];
+document.body.classList.toggle('bgon',m!='none');bgb.textContent='🎨 Fondo: '+N[mi];
+try{localStorage.setItem(K+'-bg',mi)}catch(e){}
+if(m=='aurora'||m=='grad')bg.className='bg-'+m;else if(m=='part')parts();
+else if(m=='img'){var d=getImg();if(d){bg.className='bg-img';bg.style.backgroundImage='url('+d+')'}}else if(m=='vid'){vget(function(d){if(d&&M[mi]=='vid'){bg.className='bg-vid';var v=document.createElement('video');v.src=d;v.muted=true;v.loop=true;v.autoplay=true;v.playsInline=true;bg.appendChild(v);v.play().catch(function(){})}})}}
+function pick(next){var f=document.createElement('input');f.type='file';f.accept='image/*,.gif';
+f.oncancel=function(){mi=0;apply()};
+f.onchange=function(){var fl=f.files[0];if(!fl)return;if(fl.size>3e6){alert('La imagen pesa más de 3 MB. Usa una más liviana.');mi=0;apply();return}
+var r=new FileReader();r.onload=function(){try{localStorage.setItem(K+'-img',r.result);mi=next}catch(e){alert('No se pudo guardar la imagen.');mi=0}apply()};r.readAsDataURL(fl)};f.click()}
+bgb.onclick=function(){var next=(mi+1)%M.length;if(M[next]=='img'&&!getImg()){pick(next);return}if(M[next]=='vid'){vget(function(d){if(d){mi=next;apply()}else up('vid',next,0)});return}mi=next;apply()};
+apply();
+function idb(cb){try{var r=indexedDB.open('be-db',1);r.onupgradeneeded=function(){r.result.createObjectStore('f')};r.onsuccess=function(){cb(r.result)};r.onerror=function(){cb(null)}}catch(e){cb(null)}}
+function vget(cb){idb(function(db){if(!db)return cb(null);try{var q=db.transaction('f').objectStore('f').get('vid');q.onsuccess=function(){cb(q.result)};q.onerror=function(){cb(null)}}catch(e){cb(null)}})}
+function vset(d,cb){idb(function(db){if(!db)return cb(false);try{var t=db.transaction('f','readwrite');t.objectStore('f').put(d,'vid');t.oncomplete=function(){cb(true)};t.onerror=function(){cb(false)}}catch(e){cb(false)}})}
+function up(kind,next,back){var f=document.createElement('input');f.type='file';f.accept=kind=='vid'?'video/*':'image/*,.gif';
+f.oncancel=function(){mi=back;apply()};
+f.onchange=function(){var fl=f.files[0];if(!fl)return;var lim=kind=='vid'?25e6:3e6;
+if(fl.size>lim){alert('El archivo pesa más de '+lim/1e6+' MB. Usa uno más liviano.');mi=back;apply();return}
+var r=new FileReader();r.onload=function(){function ok(){mi=next;apply()}
+if(kind=='vid')vset(r.result,function(g){if(g)ok();else{alert('No se pudo guardar el video.');mi=back;apply()}});
+else{try{localStorage.setItem(K+'-img',r.result);ok()}catch(e){alert('No se pudo guardar la imagen.');mi=back;apply()}}};
+r.readAsDataURL(fl)};f.click()}
+document.getElementById('ui').onclick=function(){up('img',4,mi)};
+document.getElementById('uv').onclick=function(){up('vid',5,mi)};
+var CK=K+'-col',C={},rg;try{C=JSON.parse(localStorage.getItem(CK))||{}}catch(e){}
+function paint(){var s=document.documentElement.style;['--navy','--mu','--tx'].forEach(function(p){s.removeProperty(p)});if(C.t)s.setProperty('--navy',C.t);if(C.x){s.setProperty('--mu',C.x);s.setProperty('--tx',C.x)}try{localStorage.setItem(CK,JSON.stringify(C))}catch(e){}}
+paint();
+document.getElementById('ct').oninput=function(){C.t=this.value;paint()};
+document.getElementById('cx').oninput=function(){C.x=this.value;paint()};
+document.getElementById('cr').onclick=function(){C={};paint()};
+document.getElementById('cb').onclick=function(){document.getElementById('cp').classList.toggle('open')};
+document.addEventListener('selectionchange',function(){var s=getSelection();if(s.rangeCount&&!s.isCollapsed&&app.contains(s.anchorNode))rg=s.getRangeAt(0).cloneRange()});
+document.getElementById('cs').oninput=function(){if(!on||!rg){alert('Activa ✎ Editar y selecciona primero el texto que quieres pintar.');return}var s=getSelection();s.removeAllRanges();s.addRange(rg);document.execCommand('foreColor',false,this.value);save()};
+function clean(){var c=app.cloneNode(true);c.querySelectorAll('.x,.addb').forEach(function(n){n.remove()});c.querySelectorAll('.hasx').forEach(function(n){n.classList.remove('hasx')});return c.innerHTML}
+var G=[['.grid5','.card',0,'＋ Agregar integrante / casilla'],['.cols','.card',0,'＋ Agregar casilla'],['.chips','span',0,'＋ Agregar etiqueta'],['.meta','div',0,'＋ Agregar dato'],['#manifiesto .two > div:first-child','.val',1,'＋ Agregar valor'],['#manifiesto .two > div:last-child','.blk',1,'＋ Agregar bloque de texto'],['#video .two > div:last-child','.an',1,'＋ Agregar punto de análisis']];
+var TEAM='<div class="card"><div class="ph" title="Foto">👤</div><h4>Nombre Apellido</h4><small>[Carrera]</small><p>Breve reseña: intereses, motivación ética y aporte al equipo.</p><a class="li" href="https://linkedin.com/in/usuario" target="_blank">LinkedIn</a></div>';
+var SEC='<section><div class="tag">Nuevo apartado</div><h2>Título del <em>apartado</em></h2><p class="lead">Describe aquí este apartado.</p><div class="grid5"><div class="card"><h4>Título</h4><p>Texto de la casilla.</p></div></div></section>';
+function mk(t,c,f,txt){var b=document.createElement(t);b.className=c;b.contentEditable='false';b.onclick=f;b.textContent=txt;return b}
+function ui(o){app.querySelectorAll('.x,.addb').forEach(function(n){n.remove()});app.querySelectorAll('.hasx').forEach(function(n){n.classList.remove('hasx')});if(!o)return;
+G.forEach(function(g){app.querySelectorAll(g[0]).forEach(function(p){
+var its=p.querySelectorAll(':scope > '+g[1]),tpl=its.length?its[its.length-1].cloneNode(true):null;
+its.forEach(function(it){it.classList.add('hasx');it.appendChild(mk('b','x',function(e){e.stopPropagation();ask(this,'¿Quitar?',function(){it.remove();save()})},'×'))});
+var b=mk('button','addb',function(){if(p.id=='team')p.insertAdjacentHTML('beforeend',TEAM);else if(tpl){var n=tpl.cloneNode(true);if(g[2])p.insertBefore(n,b);else p.appendChild(n)}else return;ui(true);save()},g[3]);
+if(g[2])p.appendChild(b);else p.after(b)})});
+app.querySelectorAll('section:not(#inicio)').forEach(function(s){s.classList.add('hasx');s.appendChild(mk('b','x',function(){ask(this,'¿Quitar apartado?',function(){s.remove();save();navb()})},'×'))});
+var f=app.querySelector('footer');f.before(mk('button','addb',function(){f.insertAdjacentHTML('beforebegin',SEC);ui(true);navb();save()},'＋ Agregar apartado nuevo'))}
+var KN={inicio:'Inicio',equipo:'Equipo',manifiesto:'Manifiesto',podcast:'Podcast',video:'Video-reacción',infografia:'Infografía'};
+function navb(){var u=document.querySelector('nav ul');u.textContent='';app.querySelectorAll('section').forEach(function(s,i){if(!s.id)s.id='sec'+Date.now()+i;var t=KN[s.id]||(s.querySelector('.tag')||{}).textContent||'Sección',li=document.createElement('li'),a=document.createElement('a');a.href='#'+s.id;a.textContent=t.slice(0,18);li.appendChild(a);u.appendChild(li)})}
+navb();
+function ask(b,msg,fn){if(b.dataset.s){clearTimeout(+b.dataset.s);delete b.dataset.s;b.classList.remove('sure');b.textContent=b.dataset.t;fn();return}b.dataset.t=b.textContent;b.textContent=msg;b.classList.add('sure');b.dataset.s=setTimeout(function(){delete b.dataset.s;b.classList.remove('sure');b.textContent=b.dataset.t},3000)}
+function toast(m){var t=document.createElement('div');t.id='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},3500)}
+alert=toast;
+function askv(cb){var d=document.createElement('div');d.id='dlg';d.innerHTML='<div><p>Pega el enlace (YouTube, Spotify, Drive, Genially, Canva…) o el código embed:</p><textarea></textarea><div><button class="no">Cancelar</button><button class="ok">Aceptar</button></div></div>';document.body.appendChild(d);var t=d.querySelector('textarea');t.focus();d.querySelector('.no').onclick=function(){d.remove()};d.querySelector('.ok').onclick=function(){var v=t.value.trim();d.remove();if(v)cb(v)}}
+</script>
+</body>
+</html>

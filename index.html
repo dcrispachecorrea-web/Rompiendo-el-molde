@@ -39,8 +39,9 @@ a.li{display:inline-block;margin-top:10px;font-size:.7rem;font-weight:600;color:
 .lab{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
 .blk{margin-bottom:22px}.blk h4{font:600 1.15rem 'Cormorant Garamond',serif;color:var(--navy);margin-bottom:8px}.blk p{font-size:.88rem;color:var(--mu);line-height:1.8}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.chips span{background:var(--cream);border:1px solid var(--bd);padding:4px 12px;font-size:.75rem;color:var(--navy)}
-.slot{aspect-ratio:16/9;background:var(--cream);border:1px dashed var(--bd);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mu);font-size:.8rem;padding:16px;border-radius:6px;overflow:hidden}.slot iframe{width:100%;height:100%;border:0}.slot audio{width:100%}
-.slot.short{aspect-ratio:auto;min-height:90px}.slot.wide{aspect-ratio:16/7}
+.slot{width:100%;height:auto;aspect-ratio:16/9;background:var(--cream);border:1px dashed var(--bd);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mu);font-size:.8rem;padding:16px;border-radius:6px;overflow:hidden}.slot iframe,.slot video{width:100%!important;height:100%!important;border:0;display:block}.slot video{object-fit:contain;background:#000}.slot audio{width:100%}
+.slot.short,.slot.wide{aspect-ratio:16/9;min-height:0}
+.slot.media-filled{padding:0;border:0;background:#000}
 .an{padding:14px 0;border-bottom:1px solid var(--bd)}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
 footer{background:#1b3a6b;color:#ffffffa0;padding:32px 6vw calc(32px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.76rem;line-height:1.7}
@@ -96,7 +97,7 @@ h1 em{background:linear-gradient(90deg,var(--gold),#e8d28a,var(--gold));backgrou
 .mode-edit .ph::after{content:"Cambiar foto";position:absolute;left:0;right:0;bottom:0;background:rgba(27,58,107,.9);color:#fff;font:600 .58rem 'DM Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding:5px;opacity:0;transition:opacity .18s}
 .mode-edit .ph:hover::after{opacity:1}
 .mode-edit .slot{position:relative;cursor:pointer;outline:2px dashed var(--gold);outline-offset:-4px}
-.mode-edit .slot iframe,.mode-edit .slot audio{pointer-events:none}
+.mode-edit .slot iframe,.mode-edit .slot video,.mode-edit .slot audio{pointer-events:none}
 .mode-edit .slot::after{content:"Cambiar contenido";position:absolute;top:8px;right:8px;background:rgba(27,58,107,.9);color:#fff;font:600 .55rem 'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:4px 7px;border-radius:4px;pointer-events:none}
 #app[contenteditable="true"]{outline:none}
 #app[contenteditable="true"] :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -113,6 +114,13 @@ h1 em{background:linear-gradient(90deg,var(--gold),#e8d28a,var(--gold));backgrou
 #status a:hover{color:var(--gold)}
 #status .status-action{font:600 .68rem 'DM Sans',sans-serif;color:var(--navy);background:none;border:0;border-left:1px solid var(--bd);padding:0 0 0 8px;margin-left:2px;cursor:pointer;white-space:nowrap}
 #status .status-action:hover{color:var(--gold)}
+#sel-toolbar{position:fixed;z-index:90;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:6px 10px;box-shadow:0 10px 28px #0004;font:600 .67rem 'DM Sans',sans-serif;color:var(--mu);white-space:nowrap;user-select:none}
+#sel-toolbar[hidden]{display:none}
+#sel-toolbar .sel-label{color:var(--navy);letter-spacing:.04em}
+#sel-toolbar input[type="color"]{width:30px;height:24px;padding:2px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);cursor:pointer}
+#sel-toolbar input[type="color"]::-webkit-color-swatch-wrapper{padding:0}
+#sel-toolbar input[type="color"]::-webkit-color-swatch{border:0;border-radius:4px}
+@media(max-width:560px){#sel-toolbar{font-size:.63rem;padding:5px 9px;gap:6px}#sel-toolbar input[type="color"]{width:28px;height:23px}}
 
 /* ===== Estructura dinámica ===== */
 .addb{display:block;width:100%;margin-top:14px;font:600 .74rem 'DM Sans',sans-serif;letter-spacing:.03em;padding:10px 14px;border:1px dashed var(--gold);background:transparent;color:var(--gold);border-radius:8px;cursor:pointer;text-align:center;transition:background .2s}
@@ -312,6 +320,11 @@ body.has-section-bg #app > section::after{content:"";position:absolute;inset:0;z
 <a href="#" id="exitEdit" title="Cambiar a modo lector">Salir</a>
 </div>
 
+<div id="sel-toolbar" role="toolbar" aria-label="Color del texto seleccionado" hidden>
+<span class="sel-label">Color</span>
+<input id="sel-color" type="color" value="#1f2937" title="Pintar el texto seleccionado" aria-label="Color del texto seleccionado">
+</div>
+
 <div id="dlg" role="presentation"></div>
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -362,6 +375,8 @@ const statusText = document.getElementById("statusText");
 const exitEdit = document.getElementById("exitEdit");
 const colorBtn = document.getElementById("colorBtn");
 const bgBtn = document.getElementById("bgBtn");
+const selToolbar = document.getElementById("sel-toolbar");
+const selColor = document.getElementById("sel-color");
 const dlg = document.getElementById("dlg");
 const toastEl = document.getElementById("toast");
 
@@ -582,11 +597,13 @@ photoInput.addEventListener("change", async () => {
 
 /* ───────────────────────── Contenido ───────────────────────── */
 function applyContent(html) {
+  hideSelectionToolbar();
   app.innerHTML = sanitizeHTML(html);
   applyTheme();
   if (editingOn) activateEditor();
   else syncCustomNav();
   hydrateAssets();
+  markSlots();
   applyBackgrounds();
 }
 
@@ -644,7 +661,7 @@ function openColorDialog() {
   openDialog(`
     <div class="lab">Personalizar</div>
     <h3>Colores de la página</h3>
-    <p class="hint">Se aplican a todo el portafolio y a las casillas nuevas. Se guardan en la nube junto con el contenido.</p>
+    <p class="hint">Color base para todo el portafolio. Para pintar solo unas palabras o una frase, selecciónalas y usa la barra flotante de color; esos colores individuales se mantienen aunque cambies el color general.</p>
     <div class="color-row"><span>Títulos y navegación<small>Encabezados, enlaces y bloques principales.</small></span><input id="theme-title" type="color" value="${title}"></div>
     <div class="color-row"><span>Texto<small>Párrafos, etiquetas y descripciones.</small></span><input id="theme-text" type="color" value="${text}"></div>
     <div class="color-row"><span>Detalles dorados<small>Etiquetas, bordes y botones de acento.</small></span><input id="theme-accent" type="color" value="${accent}"></div>
@@ -672,6 +689,183 @@ function openColorDialog() {
     queueSave(true);
     toast("Colores restablecidos.");
   });
+}
+
+/* ───────────────────────── Color por selección ───────────────────────── */
+const SEL_EXCLUDE = "[data-editor-ui],button,input,textarea,select,.slot,.ph,.addb,.editor-item-tools,.editor-section-tools,[contenteditable=\"false\"],[hidden]";
+let activeSelectionRange = null;
+let selectionToolbarTimer = null;
+
+function selectionNodeElement(node) {
+  if (!node) return null;
+  if (node.nodeType === Node.TEXT_NODE) return node.parentElement;
+  if (node.nodeType === Node.ELEMENT_NODE) return node;
+  return node.parentElement;
+}
+
+function isExcludedSelectionNode(node) {
+  const el = selectionNodeElement(node);
+  if (!el || !app.contains(el)) return true;
+  return Boolean(el.closest(SEL_EXCLUDE));
+}
+
+function editorTextSelection() {
+  if (!editingOn) return null;
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return null;
+  const range = sel.getRangeAt(0);
+  if (!range.toString().trim()) return null;
+  if (!app.contains(range.commonAncestorContainer)) return null;
+  if (isExcludedSelectionNode(range.startContainer) || isExcludedSelectionNode(range.endContainer)) return null;
+  return range;
+}
+
+function cssColorToHex(value) {
+  const raw = String(value || "").trim();
+  if (/^#[0-9a-f]{6}$/i.test(raw)) return raw.toLowerCase();
+  const match = raw.match(/^rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s/]+([\d.]+))?\s*\)$/i);
+  if (!match) return "";
+  if (match[4] !== undefined && Number(match[4]) === 0) return "";
+  return "#" + [match[1], match[2], match[3]].map((part) => Number(part).toString(16).padStart(2, "0")).join("");
+}
+
+function firstSelectedTextNode(range) {
+  if (range.startContainer.nodeType === Node.TEXT_NODE) return range.startContainer;
+  const walker = document.createTreeWalker(app, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !range.intersectsNode(node)) return NodeFilter.FILTER_REJECT;
+      const el = node.parentElement;
+      if (!el || el.closest(SEL_EXCLUDE)) return NodeFilter.FILTER_REJECT;
+      const start = node === range.startContainer ? range.startOffset : 0;
+      const end = node === range.endContainer ? range.endOffset : node.nodeValue.length;
+      return start < end ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  return walker.nextNode() ? walker.currentNode : null;
+}
+
+function textColorAtSelection(range) {
+  let el = selectionNodeElement(firstSelectedTextNode(range) || range.startContainer);
+  while (el && app.contains(el)) {
+    const hex = cssColorToHex(getComputedStyle(el).color);
+    if (hex) return hex;
+    el = el.parentElement;
+  }
+  return computedColor("--tx", "#1f2937");
+}
+
+function hideSelectionToolbar() {
+  activeSelectionRange = null;
+  if (!selToolbar) return;
+  if (selToolbar.contains(document.activeElement) && document.activeElement.blur) document.activeElement.blur();
+  selToolbar.hidden = true;
+}
+
+function showSelectionToolbar(range, color) {
+  if (!editingOn || !selToolbar) return;
+  const rect = range.getBoundingClientRect();
+  if (!rect || rect.width < 1 || rect.bottom < 0 || rect.top > window.innerHeight) {
+    hideSelectionToolbar();
+    return;
+  }
+  activeSelectionRange = range.cloneRange();
+  const hex = cssColorToHex(color) || textColorAtSelection(range);
+  if (selColor) selColor.value = hex;
+  selToolbar.hidden = false;
+  const bar = selToolbar.getBoundingClientRect();
+  let left = rect.left + rect.width / 2 - bar.width / 2;
+  let top = rect.top - bar.height - 10;
+  if (top < 8) top = rect.bottom + 10;
+  left = Math.max(8, Math.min(window.innerWidth - bar.width - 8, left));
+  top = Math.max(8, Math.min(window.innerHeight - bar.height - 8, top));
+  selToolbar.style.left = `${Math.round(left)}px`;
+  selToolbar.style.top = `${Math.round(top)}px`;
+}
+
+function refreshSelectionToolbar() {
+  if (!editingOn || !selToolbar) return;
+  if (document.activeElement && selToolbar.contains(document.activeElement)) return;
+  if (dlg.classList.contains("open")) {
+    hideSelectionToolbar();
+    return;
+  }
+  const range = editorTextSelection();
+  if (!range) {
+    hideSelectionToolbar();
+    return;
+  }
+  showSelectionToolbar(range);
+}
+
+function scheduleSelectionToolbar() {
+  clearTimeout(selectionToolbarTimer);
+  selectionToolbarTimer = setTimeout(refreshSelectionToolbar, 35);
+}
+
+function applySelectionColor(hex) {
+  if (!editingOn || !/^#[0-9a-f]{6}$/i.test(hex || "")) return;
+  const range = activeSelectionRange;
+  if (!range || !range.commonAncestorContainer.isConnected || !app.contains(range.commonAncestorContainer)) {
+    hideSelectionToolbar();
+    return;
+  }
+  if (isExcludedSelectionNode(range.startContainer) || isExcludedSelectionNode(range.endContainer)) {
+    hideSelectionToolbar();
+    return;
+  }
+
+  const targets = [];
+  const walker = document.createTreeWalker(app, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !range.intersectsNode(node)) return NodeFilter.FILTER_REJECT;
+      const el = node.parentElement;
+      if (!el || el.closest(SEL_EXCLUDE)) return NodeFilter.FILTER_REJECT;
+      const start = node === range.startContainer ? range.startOffset : 0;
+      const end = node === range.endContainer ? range.endOffset : node.nodeValue.length;
+      return start < end ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  while (walker.nextNode()) targets.push(walker.currentNode);
+  if (!targets.length) return;
+
+  const created = [];
+  targets.forEach((node) => {
+    if (!node.isConnected) return;
+    const start = node === range.startContainer ? range.startOffset : 0;
+    const end = node === range.endContainer ? range.endOffset : node.nodeValue.length;
+    if (start >= end) return;
+    let target = node;
+    if (start > 0) target = target.splitText(start);
+    const length = end - start;
+    if (length < target.nodeValue.length) target.splitText(length);
+    const span = document.createElement("span");
+    span.style.color = hex;
+    target.parentNode.insertBefore(span, target);
+    span.appendChild(target);
+    created.push(span);
+  });
+  if (!created.length) return;
+
+  const sel = window.getSelection();
+  const nextRange = document.createRange();
+  nextRange.setStartBefore(created[0]);
+  nextRange.setEndAfter(created[created.length - 1]);
+  sel.removeAllRanges();
+  sel.addRange(nextRange);
+  queueSave(true);
+  showSelectionToolbar(nextRange, hex);
+}
+
+function initSelectionColorToolbar() {
+  if (!editingOn || !selToolbar || !selColor) return;
+  document.addEventListener("selectionchange", scheduleSelectionToolbar);
+  selColor.addEventListener("change", () => applySelectionColor(selColor.value));
+  document.addEventListener("pointerdown", (event) => {
+    if (selToolbar.contains(event.target)) return;
+    hideSelectionToolbar();
+  }, true);
+  document.addEventListener("scroll", hideSelectionToolbar, true);
+  window.addEventListener("resize", hideSelectionToolbar);
 }
 
 /* ───────────────────────── Fondos personalizados ───────────────────────── */
@@ -1444,6 +1638,7 @@ function decorateCustomSection(section) {
 
 function renderEditorUI() {
   if (!editingOn) return;
+  hideSelectionToolbar();
   $$("[data-editor-ui]", app).forEach((el) => el.remove());
   $$(".has-tools", app).forEach((el) => el.classList.remove("has-tools"));
 
@@ -1591,6 +1786,7 @@ async function saveNow() {
 
 /* ───────────────────────── Enlaces e inserts ───────────────────────── */
 function openDialog(inner) {
+  hideSelectionToolbar();
   dlg.innerHTML = `<div class="dlg-card">${inner}</div>`;
   dlg.classList.add("open");
   const first = dlg.querySelector("input, textarea");
@@ -1652,6 +1848,14 @@ function iframeHTML(src) {
   return `<iframe src="${esc(src)}" loading="lazy" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
 }
 
+function markSlot(slot) {
+  slot.classList.toggle("media-filled", Boolean(slot.querySelector(":scope > iframe, :scope > video")));
+}
+
+function markSlots(scope = app) {
+  $$(".slot", scope).forEach(markSlot);
+}
+
 function buildEmbed(raw) {
   let value = String(raw).trim();
   const iframeMatch = value.match(/<iframe[^>]*\bsrc\s*=\s*["']([^"']+)["']/i);
@@ -1707,6 +1911,7 @@ function editEmbed(slot) {
     try {
       const html = buildEmbed($("#d-embed").value);
       slot.innerHTML = sanitizeHTML(html);
+      markSlot(slot);
       closeDialog();
       queueSave(true);
       toast("Contenido insertado.");
@@ -1717,6 +1922,7 @@ function editEmbed(slot) {
   $("#d-remove").addEventListener("click", () => {
     if (!slot.isConnected) { closeDialog(); return; }
     slot.textContent = emptyText;
+    slot.classList.remove("media-filled");
     closeDialog();
     queueSave(true);
     toast("Contenido quitado.");
@@ -1781,6 +1987,7 @@ dlg.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeShare();
+    hideSelectionToolbar();
     if (dlg.classList.contains("open")) closeDialog();
   }
 });
@@ -1828,6 +2035,7 @@ if (editingOn) {
     setTimeout(() => toast("La clave del enlace de Editor no es válida. Abriendo en modo lector."), 700);
   }
 }
+initSelectionColorToolbar();
 
 app.addEventListener("input", (event) => {
   if (!editingOn) return;
@@ -2051,6 +2259,7 @@ function initLocal() {
 }
 
 loadLocalAssets();
+markSlots();
 applyBackgrounds();
 
 if (CLOUD_CONFIGURED) {

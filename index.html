@@ -111,6 +111,63 @@ h1 em{background:linear-gradient(90deg,var(--gold),#e8d28a,var(--gold));backgrou
 @keyframes pulse{50%{opacity:.3}}
 #status a{color:var(--navy);text-decoration:none;border-left:1px solid var(--bd);padding-left:8px;margin-left:2px;font-weight:600}
 #status a:hover{color:var(--gold)}
+#status .status-action{font:600 .68rem 'DM Sans',sans-serif;color:var(--navy);background:none;border:0;border-left:1px solid var(--bd);padding:0 0 0 8px;margin-left:2px;cursor:pointer;white-space:nowrap}
+#status .status-action:hover{color:var(--gold)}
+
+/* ===== Estructura dinámica ===== */
+.addb{display:block;width:100%;margin-top:14px;font:600 .74rem 'DM Sans',sans-serif;letter-spacing:.03em;padding:10px 14px;border:1px dashed var(--gold);background:transparent;color:var(--gold);border-radius:8px;cursor:pointer;text-align:center;transition:background .2s}
+.addb:hover{background:#c9a84c1a}
+#app > .addb{width:calc(100% - 12vw);margin:0 6vw 26px}
+.addb.chip-add{display:inline-block;width:auto;margin:0;padding:4px 12px;font-size:.73rem;border-radius:0;letter-spacing:0}
+.has-tools{position:relative}
+.editor-item-tools{position:absolute;top:6px;right:6px;z-index:8;display:flex;gap:4px;opacity:0;pointer-events:none;transition:opacity .15s}
+.has-tools:hover>.editor-item-tools,.has-tools:focus-within>.editor-item-tools{opacity:1;pointer-events:auto}
+@media(hover:none){.editor-item-tools{opacity:1;pointer-events:auto}}
+.editor-item-tools button{display:grid;place-items:center;width:24px;height:24px;padding:0;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(27,58,107,.92);color:#fff;cursor:pointer;box-shadow:0 2px 6px #0004;line-height:1}
+.editor-item-tools button:hover{background:var(--gold);border-color:var(--gold);color:#1b1b1b}
+.editor-item-tools button[data-act="del"]:hover{background:var(--danger);border-color:var(--danger);color:#fff}
+.editor-item-tools svg{width:12px;height:12px;pointer-events:none}
+.chip-x{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:6px;padding:0;border:0;border-radius:50%;background:var(--danger);color:#fff;font:700 .68rem/1 sans-serif;cursor:pointer;vertical-align:middle}
+.chip-x:hover{filter:brightness(1.12)}
+[data-custom-section]{position:relative}
+.editor-section-tools{position:absolute;top:18px;right:6vw;z-index:8;display:flex;gap:6px;opacity:.5;transition:opacity .15s}
+[data-custom-section]:hover .editor-section-tools,[data-custom-section]:focus-within .editor-section-tools{opacity:1}
+.editor-section-tools button{display:inline-flex;align-items:center;gap:5px;font:600 .6rem 'DM Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--navy);cursor:pointer;box-shadow:0 2px 8px #0002}
+.editor-section-tools button:hover{border-color:var(--gold)}
+.editor-section-tools button[data-act="del"]{color:var(--danger)}
+.editor-section-tools svg{width:11px;height:11px;pointer-events:none}
+#theme-colors{display:none!important}
+.color-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.color-row span{font-size:.82rem;color:var(--tx)}
+.color-row small{display:block;font-size:.66rem;color:var(--mu);margin-top:2px}
+.color-row input[type="color"]{flex:none;width:46px;height:30px;padding:2px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);cursor:pointer}
+
+/* ===== Fondos personalizados ===== */
+#page-bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;display:none}
+#page-bg-layer::before{content:"";position:absolute;inset:0;background-image:var(--page-bg-image,none);background-size:var(--page-bg-size,cover);background-repeat:var(--page-bg-repeat,no-repeat);background-position:center;opacity:var(--page-bg-opacity,1)}
+#page-bg-layer::after{content:"";position:absolute;inset:0;background:#000;opacity:var(--page-bg-dark,0)}
+body.has-page-bg #page-bg-layer{display:block}
+body.has-page-bg #app{position:relative;z-index:1}
+body.has-page-bg #app > section{background:transparent!important}
+body.has-card-bg :is(.card,.quote){position:relative;isolation:isolate}
+body.has-card-bg :is(.card,.quote)::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background-image:var(--card-bg-image);background-size:var(--card-bg-size,cover);background-repeat:var(--card-bg-repeat,no-repeat);background-position:center;opacity:var(--card-bg-opacity,1);pointer-events:none}
+body.has-card-bg :is(.card,.quote)::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:#000;opacity:var(--card-bg-dark,0);pointer-events:none}
+body.has-card-bg .card .ph{background:transparent}
+body.has-section-bg #app > section{position:relative;isolation:isolate}
+body.has-section-bg #app > section::before{content:"";position:absolute;inset:0;z-index:-1;background-image:var(--section-bg-image);background-size:var(--section-bg-size,cover);background-repeat:var(--section-bg-repeat,no-repeat);background-position:center;opacity:var(--section-bg-opacity,1);pointer-events:none}
+body.has-section-bg #app > section::after{content:"";position:absolute;inset:0;z-index:-1;background:#000;opacity:var(--section-bg-dark,0);pointer-events:none}
+#page-backgrounds{display:none!important}
+.bg-preview{position:relative;aspect-ratio:2/1;border:1px solid var(--bd);border-radius:8px;overflow:hidden;background:var(--cream);margin-top:10px}
+.bg-preview-img{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat;opacity:1}
+.bg-preview-dark{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.bg-preview .bg-empty{position:absolute;inset:0;display:grid;place-items:center;font-size:.72rem;color:var(--mu);background:var(--cream)}
+.bg-preview .bg-empty[hidden]{display:none}
+.dlg-actions.bg-actions{justify-content:flex-start}
+.bg-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.bg-grid .field{margin-top:10px}
+.field b{color:var(--navy);font-size:.72rem;letter-spacing:0;text-transform:none;font-weight:600}
+.field input[type="range"]{padding:0;border:0;background:transparent;accent-color:var(--gold);margin-top:10px}
+@media(max-width:560px){.bg-grid{grid-template-columns:1fr}}
 
 /* ===== Diálogos / avisos ===== */
 #dlg{position:fixed;inset:0;z-index:100;background:rgba(10,14,20,.55);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
@@ -119,7 +176,7 @@ h1 em{background:linear-gradient(90deg,var(--gold),#e8d28a,var(--gold));backgrou
 .dlg-card h3{font:300 1.7rem/1.1 'Cormorant Garamond',serif;color:var(--navy);margin:2px 0 6px}
 .dlg-card .hint{font-size:.8rem;color:var(--mu);line-height:1.6;margin-bottom:8px}
 .field{display:block;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);font-weight:600;margin:12px 0 0}
-.field input,.field textarea{width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font:400 .88rem 'DM Sans',sans-serif;letter-spacing:0;text-transform:none}
+.field input,.field textarea,.field select{width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font:400 .88rem 'DM Sans',sans-serif;letter-spacing:0;text-transform:none}
 .field textarea{height:100px;resize:vertical;font-family:'DM Sans',sans-serif}
 .dlg-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
 .dlg-actions button{font:600 .78rem 'DM Sans',sans-serif;padding:9px 14px;border-radius:8px;border:1px solid var(--bd);background:var(--cream);color:var(--navy);cursor:pointer}
@@ -129,7 +186,7 @@ h1 em{background:linear-gradient(90deg,var(--gold),#e8d28a,var(--gold));backgrou
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;z-index:120;background:#1f2937;color:#fff;padding:11px 16px;border-radius:10px;font-size:.82rem;max-width:min(92vw,540px);box-shadow:0 8px 24px #0005;display:none;align-items:center;gap:12px;line-height:1.45}
 #toast.show{display:flex}
 #toast button{font:600 .72rem 'DM Sans',sans-serif;background:var(--gold);color:#1b1b1b;border:0;border-radius:6px;padding:6px 10px;cursor:pointer;white-space:nowrap}
-@media(max-width:560px){.share-menu{width:calc(100vw - 28px)}nav{padding-left:14px;padding-right:14px}#status{font-size:.64rem;padding:7px 10px 7px 12px}}
+@media(max-width:560px){.share-menu{width:calc(100vw - 28px)}nav{padding-left:14px;padding-right:14px}#status{font-size:.64rem;padding:7px 10px 7px 12px;gap:6px}#status .status-action{font-size:.64rem}.editor-section-tools{top:14px;right:14px}.editor-section-tools button{padding:5px 7px;font-size:.56rem}}
 </style>
 </head>
 <body>
@@ -250,6 +307,8 @@ h1 em{background:linear-gradient(90deg,var(--gold),#e8d28a,var(--gold));backgrou
 <div id="status" hidden>
 <span class="st-dot"></span>
 <span id="statusText" aria-live="polite">Conectando…</span>
+<button id="colorBtn" class="status-action" type="button" title="Cambiar los colores de la página">Aa Color</button>
+<button id="bgBtn" class="status-action" type="button" title="Cambiar el fondo de la página, tarjetas o secciones">Fondo</button>
 <a href="#" id="exitEdit" title="Cambiar a modo lector">Salir</a>
 </div>
 
@@ -301,6 +360,8 @@ const menuSync = document.getElementById("menuSync");
 const statusEl = document.getElementById("status");
 const statusText = document.getElementById("statusText");
 const exitEdit = document.getElementById("exitEdit");
+const colorBtn = document.getElementById("colorBtn");
+const bgBtn = document.getElementById("bgBtn");
 const dlg = document.getElementById("dlg");
 const toastEl = document.getElementById("toast");
 
@@ -378,6 +439,7 @@ function activateEditor() {
   if (!editingOn) return;
   app.setAttribute("contenteditable", "true");
   app.spellcheck = false;
+  renderEditorUI();
 }
 
 /* ───────────────────────── Sanitización ───────────────────────── */
@@ -429,10 +491,14 @@ function paintAsset(id) {
 }
 
 function loadLocalAssets() {
-  ["team1", "team2", "team3", "team4", "team5"].forEach((id) => {
-    const src = safeGet(LS_ASSET + id);
-    if (src && src.startsWith("data:image/")) assets[id] = src;
-  });
+  try {
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith(LS_ASSET)) continue;
+      const src = safeGet(key);
+      if (src && src.startsWith("data:image/")) assets[key.slice(LS_ASSET.length)] = src;
+    }
+  } catch { /* almacenamiento no disponible */ }
 }
 
 function loadLocalContent() {
@@ -517,16 +583,941 @@ photoInput.addEventListener("change", async () => {
 /* ───────────────────────── Contenido ───────────────────────── */
 function applyContent(html) {
   app.innerHTML = sanitizeHTML(html);
+  applyTheme();
   if (editingOn) activateEditor();
+  else syncCustomNav();
   hydrateAssets();
+  applyBackgrounds();
 }
 
 function collectHTML() {
   const clone = app.cloneNode(true);
+  clone.querySelectorAll("[data-editor-ui]").forEach((el) => el.remove());
+  clone.querySelectorAll(".has-tools").forEach((el) => el.classList.remove("has-tools"));
   clone.querySelectorAll("img[data-a]").forEach((img) => img.removeAttribute("src"));
   clone.querySelectorAll("[contenteditable]").forEach((el) => el.removeAttribute("contenteditable"));
   clone.querySelectorAll("[spellcheck]").forEach((el) => el.removeAttribute("spellcheck"));
   return sanitizeHTML(clone.innerHTML);
+}
+
+/* ───────────────────────── Colores de la página ───────────────────────── */
+const THEME_ID = "theme-colors";
+
+function ensureThemeEl() {
+  let el = document.getElementById(THEME_ID);
+  if (!el) {
+    el = document.createElement("div");
+    el.id = THEME_ID;
+    el.hidden = true;
+    el.contentEditable = "false";
+    app.appendChild(el);
+  }
+  return el;
+}
+
+function applyTheme() {
+  const cfg = document.getElementById(THEME_ID);
+  const root = document.documentElement;
+  const hex = (value) => (/^#[0-9a-f]{6}$/i.test(value || "") ? value : "");
+  const setVar = (name, value) => {
+    if (value) root.style.setProperty(name, value);
+    else root.style.removeProperty(name);
+  };
+  setVar("--navy", hex(cfg && cfg.dataset.navy));
+  setVar("--gold", hex(cfg && cfg.dataset.accent));
+  setVar("--tx", hex(cfg && cfg.dataset.text));
+  setVar("--mu", hex(cfg && cfg.dataset.text));
+}
+
+function computedColor(prop, fallback) {
+  const value = getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
+  return /^#[0-9a-f]{6}$/i.test(value) ? value : fallback;
+}
+
+function openColorDialog() {
+  if (!editingOn) return;
+  const cfg = document.getElementById(THEME_ID);
+  const hexOr = (value, fallback) => (/^#[0-9a-f]{6}$/i.test(value || "") ? value : fallback);
+  const title = hexOr(cfg && cfg.dataset.navy, computedColor("--navy", "#1b3a6b"));
+  const text = hexOr(cfg && cfg.dataset.text, computedColor("--mu", "#6b7280"));
+  const accent = hexOr(cfg && cfg.dataset.accent, computedColor("--gold", "#c9a84c"));
+  openDialog(`
+    <div class="lab">Personalizar</div>
+    <h3>Colores de la página</h3>
+    <p class="hint">Se aplican a todo el portafolio y a las casillas nuevas. Se guardan en la nube junto con el contenido.</p>
+    <div class="color-row"><span>Títulos y navegación<small>Encabezados, enlaces y bloques principales.</small></span><input id="theme-title" type="color" value="${title}"></div>
+    <div class="color-row"><span>Texto<small>Párrafos, etiquetas y descripciones.</small></span><input id="theme-text" type="color" value="${text}"></div>
+    <div class="color-row"><span>Detalles dorados<small>Etiquetas, bordes y botones de acento.</small></span><input id="theme-accent" type="color" value="${accent}"></div>
+    <div class="dlg-actions">
+      <button type="button" data-close>Cancelar</button>
+      <button type="button" class="danger" id="theme-reset">Restablecer</button>
+      <button type="button" class="ok" id="theme-save">Guardar colores</button>
+    </div>
+  `);
+  $("#theme-save").addEventListener("click", () => {
+    const el = ensureThemeEl();
+    el.dataset.navy = $("#theme-title").value;
+    el.dataset.text = $("#theme-text").value;
+    el.dataset.accent = $("#theme-accent").value;
+    applyTheme();
+    closeDialog();
+    queueSave(true);
+    toast("Colores actualizados y guardados.");
+  });
+  $("#theme-reset").addEventListener("click", () => {
+    const el = document.getElementById(THEME_ID);
+    if (el) el.remove();
+    applyTheme();
+    closeDialog();
+    queueSave(true);
+    toast("Colores restablecidos.");
+  });
+}
+
+/* ───────────────────────── Fondos personalizados ───────────────────────── */
+const BG_ID = "page-backgrounds";
+const BG_TARGETS = {
+  page: { label: "Página completa", prefix: "page", className: "has-page-bg" },
+  cards: { label: "Tarjetas y recuadros", prefix: "card", className: "has-card-bg" },
+  sections: { label: "Secciones", prefix: "section", className: "has-section-bg" }
+};
+const BG_DEFAULT_DARK = 30;
+const BG_MAX_GIF_BYTES = 700000;
+const BG_MAX_URL_LENGTH = 4096;
+
+function ensurePageBgLayer() {
+  let layer = document.getElementById("page-bg-layer");
+  if (!layer) {
+    layer = document.createElement("div");
+    layer.id = "page-bg-layer";
+    layer.setAttribute("aria-hidden", "true");
+    document.body.insertBefore(layer, document.body.firstChild);
+  }
+  return layer;
+}
+
+function ensureBackgroundsEl() {
+  let el = document.getElementById(BG_ID);
+  if (!el) {
+    el = document.createElement("div");
+    el.id = BG_ID;
+    el.hidden = true;
+    el.contentEditable = "false";
+    const theme = document.getElementById(THEME_ID);
+    if (theme && theme.parentElement === app) theme.insertAdjacentElement("afterend", el);
+    else app.appendChild(el);
+  }
+  return el;
+}
+
+function getBgEl(target) {
+  return document.querySelector(`#${BG_ID} [data-bg="${target}"]`);
+}
+
+function ensureBgEl(target) {
+  const wrap = ensureBackgroundsEl();
+  let el = wrap.querySelector(`[data-bg="${target}"]`);
+  if (!el) {
+    el = document.createElement("div");
+    el.dataset.bg = target;
+    wrap.appendChild(el);
+  }
+  if (!el.dataset.fit) el.dataset.fit = "cover";
+  if (!el.dataset.opacity) el.dataset.opacity = "100";
+  if (!el.dataset.dark) el.dataset.dark = String(BG_DEFAULT_DARK);
+  return el;
+}
+
+function bgNumber(value, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.min(100, Math.max(0, number)) : fallback;
+}
+
+function getBgConfig(target) {
+  const el = getBgEl(target);
+  const fit = el && ["cover", "contain", "repeat"].includes(el.dataset.fit) ? el.dataset.fit : "cover";
+  return {
+    kind: (el && el.dataset.kind) || "",
+    value: (el && el.dataset.value) || "",
+    fit,
+    opacity: bgNumber(el?.dataset.opacity, 100),
+    dark: bgNumber(el?.dataset.dark, BG_DEFAULT_DARK)
+  };
+}
+
+function validBgUrl(value) {
+  const raw = String(value || "").trim();
+  if (!raw || raw.length > BG_MAX_URL_LENGTH) return "";
+  try {
+    const url = new URL(raw, location.href);
+    return /^https?:$/i.test(url.protocol) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function resolveBgSource(cfg) {
+  if (!cfg || !cfg.kind || !cfg.value) return "";
+  if (cfg.kind === "url") return validBgUrl(cfg.value);
+  if (cfg.kind === "asset") {
+    const src = assets[cfg.value];
+    return typeof src === "string" && src.startsWith("data:image/") ? src : "";
+  }
+  return "";
+}
+
+function cssBg(value) {
+  const escaped = String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/[\r\n]/g, "");
+  return `url("${escaped}")`;
+}
+
+function bgFit(fit) {
+  if (fit === "repeat") return ["auto", "repeat"];
+  if (fit === "contain") return ["contain", "no-repeat"];
+  return ["cover", "no-repeat"];
+}
+
+function applyBackgrounds() {
+  ensurePageBgLayer();
+  const root = document.documentElement;
+  const body = document.body;
+  Object.entries(BG_TARGETS).forEach(([target, meta]) => {
+    const cfg = getBgConfig(target);
+    const src = resolveBgSource(cfg);
+    const active = Boolean(src) && cfg.opacity > 0;
+    body.classList.toggle(meta.className, active);
+    const base = `--${meta.prefix}-bg`;
+    if (!active) {
+      ["image", "size", "repeat", "opacity", "dark"].forEach((key) => root.style.removeProperty(`${base}-${key}`));
+      return;
+    }
+    const [size, repeat] = bgFit(cfg.fit);
+    root.style.setProperty(`${base}-image`, cssBg(src));
+    root.style.setProperty(`${base}-size`, size);
+    root.style.setProperty(`${base}-repeat`, repeat);
+    root.style.setProperty(`${base}-opacity`, String(cfg.opacity / 100));
+    root.style.setProperty(`${base}-dark`, String(cfg.dark / 100));
+  });
+}
+
+function setBgSource(target, kind, value) {
+  const el = ensureBgEl(target);
+  el.dataset.kind = kind;
+  el.dataset.value = value;
+  applyBackgrounds();
+  queueSave(true);
+}
+
+function clearBg(target) {
+  const el = ensureBgEl(target);
+  el.dataset.kind = "";
+  el.dataset.value = "";
+  applyBackgrounds();
+  queueSave(true);
+}
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("No se pudo leer el archivo."));
+    reader.readAsDataURL(file);
+  });
+}
+
+function compressBackgroundImage(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      try {
+        const maxDim = 1600;
+        const scale = Math.min(1, maxDim / Math.max(image.naturalWidth, image.naturalHeight));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        let quality = 0.84;
+        let dataUrl = canvas.toDataURL("image/jpeg", quality);
+        while (dataUrl.length > 420000 && quality > 0.44) {
+          quality -= 0.08;
+          dataUrl = canvas.toDataURL("image/jpeg", quality);
+        }
+        if (dataUrl.length > 420000) {
+          const ratio = Math.sqrt(420000 / dataUrl.length);
+          const small = document.createElement("canvas");
+          small.width = Math.max(1, Math.round(canvas.width * ratio));
+          small.height = Math.max(1, Math.round(canvas.height * ratio));
+          const sctx = small.getContext("2d");
+          sctx.fillStyle = "#ffffff";
+          sctx.fillRect(0, 0, small.width, small.height);
+          sctx.drawImage(canvas, 0, 0, small.width, small.height);
+          dataUrl = small.toDataURL("image/jpeg", 0.62);
+        }
+        if (dataUrl.length > 500000) {
+          reject(new Error("La imagen es demasiado pesada. Usa un enlace directo."));
+          return;
+        }
+        resolve(dataUrl);
+      } catch (error) {
+        reject(error);
+      }
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("No se pudo leer la imagen."));
+    };
+    image.src = url;
+  });
+}
+
+async function prepareBackgroundFile(file) {
+  const isGif = /^image\/gif$/i.test(file.type || "") || /\.gif$/i.test(file.name || "");
+  if (isGif) {
+    if (file.size > BG_MAX_GIF_BYTES) {
+      throw new Error("El GIF supera ~700 KB. Para GIFs animados grandes, usa un enlace directo.");
+    }
+    const src = await readFileAsDataURL(file);
+    if (!/^data:image\/gif;base64,/i.test(src)) throw new Error("No se pudo procesar el GIF.");
+    if (src.length > 1000000) throw new Error("El GIF es demasiado pesado para Firestore. Usa un enlace directo.");
+    return src;
+  }
+  if (!(file.type || "").startsWith("image/") && !/\.(png|jpe?g|webp|avif|bmp|svg)$/i.test(file.name || "")) {
+    throw new Error("Selecciona una imagen o un GIF.");
+  }
+  if (file.size > 20 * 1024 * 1024) throw new Error("La imagen supera 20 MB. Usa una versión más liviana o un enlace directo.");
+  return compressBackgroundImage(file);
+}
+
+async function storeBackgroundAsset(id, src) {
+  if (cloudActive && fs && db) {
+    await fs.setDoc(
+      fs.doc(db, DOC_COLLECTION, DOC_ID, "assets", id),
+      { src, editKey: EDIT_KEY, updatedAt: fs.serverTimestamp(), kind: "background" },
+      { merge: true }
+    );
+  } else {
+    safeSet(LS_ASSET + id, src);
+    if (safeGet(LS_ASSET + id) !== src) throw new Error("No hay espacio local para el fondo. Usa un enlace directo.");
+  }
+  assets[id] = src;
+}
+
+function updateBgDialog(keepUrl = false) {
+  const select = document.getElementById("bg-target");
+  if (!select) return;
+  const target = select.value;
+  const cfg = getBgConfig(target);
+  const src = resolveBgSource(cfg);
+  const urlInput = document.getElementById("bg-url");
+  if (urlInput && !keepUrl) urlInput.value = cfg.kind === "url" ? cfg.value : "";
+  const fit = document.getElementById("bg-fit");
+  if (fit) fit.value = cfg.fit;
+  const opacity = document.getElementById("bg-opacity");
+  if (opacity) opacity.value = String(cfg.opacity);
+  const dark = document.getElementById("bg-dark");
+  if (dark) dark.value = String(cfg.dark);
+  const opacityVal = document.getElementById("bg-opacity-val");
+  if (opacityVal) opacityVal.textContent = `${Math.round(cfg.opacity)}%`;
+  const darkVal = document.getElementById("bg-dark-val");
+  if (darkVal) darkVal.textContent = `${Math.round(cfg.dark)}%`;
+  const current = document.getElementById("bg-current");
+  if (current) {
+    current.textContent = src
+      ? (cfg.kind === "asset" ? "Fondo actual: imagen o GIF subido." : "Fondo actual: enlace directo.")
+      : "Sin fondo en este destino.";
+  }
+  const preview = document.getElementById("bg-preview-img");
+  if (preview) {
+    const [size, repeat] = bgFit(cfg.fit);
+    preview.style.backgroundImage = src ? cssBg(src) : "none";
+    preview.style.backgroundSize = size;
+    preview.style.backgroundRepeat = repeat;
+    preview.style.opacity = String(cfg.opacity / 100);
+  }
+  const previewDark = document.getElementById("bg-preview-dark");
+  if (previewDark) previewDark.style.opacity = String(src && cfg.opacity > 0 ? cfg.dark / 100 : 0);
+  const empty = document.getElementById("bg-preview-empty");
+  if (empty) empty.hidden = Boolean(src);
+}
+
+function openBackgroundDialog() {
+  if (!editingOn) return;
+  const options = Object.entries(BG_TARGETS)
+    .map(([key, meta]) => `<option value="${key}">${meta.label}</option>`)
+    .join("");
+  openDialog(`
+    <div class="lab">Personalizar</div>
+    <h3>Fondos de la página</h3>
+    <p class="hint">Sube una imagen o GIF, pega un enlace directo o quita el fondo para volver al color sólido. Los cambios se guardan con la página y se ven en el enlace de Lector.</p>
+    <label class="field">Aplicar a
+      <select id="bg-target">${options}</select>
+    </label>
+    <p class="hint" id="bg-current"></p>
+    <div class="bg-preview" aria-hidden="true">
+      <div class="bg-preview-img" id="bg-preview-img"></div>
+      <div class="bg-preview-dark" id="bg-preview-dark"></div>
+      <span class="bg-empty" id="bg-preview-empty">Sin fondo</span>
+    </div>
+    <label class="field">Enlace directo (imagen o GIF)
+      <input id="bg-url" type="url" placeholder="https://.../fondo.gif">
+    </label>
+    <div class="dlg-actions bg-actions">
+      <button type="button" class="ok" id="bg-url-apply">Usar URL</button>
+      <button type="button" id="bg-upload">Subir imagen/GIF</button>
+      <button type="button" class="danger" id="bg-remove">Quitar fondo</button>
+    </div>
+    <div class="bg-grid">
+      <label class="field">Ajuste
+        <select id="bg-fit">
+          <option value="cover">Cubrir (cover)</option>
+          <option value="contain">Ajustar (contain)</option>
+          <option value="repeat">Repetir</option>
+        </select>
+      </label>
+      <label class="field">Opacidad <b id="bg-opacity-val">100%</b>
+        <input id="bg-opacity" type="range" min="0" max="100" step="5" value="100">
+      </label>
+      <label class="field">Filtro oscuro <b id="bg-dark-val">30%</b>
+        <input id="bg-dark" type="range" min="0" max="100" step="5" value="30">
+      </label>
+    </div>
+    <p class="hint">Para GIFs animados grandes, usa un enlace directo: conserva la animación y no ocupa espacio en Firestore. Los GIF subidos se guardan tal cual hasta ~700 KB; las demás imágenes se comprimen automáticamente.</p>
+    <div class="dlg-actions"><button type="button" data-close id="bg-done">Listo</button></div>
+  `);
+  updateBgDialog();
+  const done = document.getElementById("bg-done");
+  if (done) done.addEventListener("click", () => queueSave(true));
+  const targetSelect = document.getElementById("bg-target");
+  targetSelect.addEventListener("change", updateBgDialog);
+  document.getElementById("bg-url-apply").addEventListener("click", () => {
+    const target = targetSelect.value;
+    const url = validBgUrl(document.getElementById("bg-url").value);
+    if (!url) {
+      toast("Pega un enlace directo http(s) a una imagen o GIF. Para archivos, usa Subir imagen/GIF.");
+      return;
+    }
+    setBgSource(target, "url", url);
+    updateBgDialog();
+    toast("Fondo aplicado y guardado.");
+  });
+  document.getElementById("bg-url").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("bg-url-apply").click();
+    }
+  });
+  document.getElementById("bg-upload").addEventListener("click", () => {
+    bgUploadTarget = targetSelect.value;
+    bgFileInput.click();
+  });
+  document.getElementById("bg-remove").addEventListener("click", () => {
+    clearBg(targetSelect.value);
+    updateBgDialog();
+    toast("Fondo quitado. Se restauró el color sólido.");
+  });
+  const applyAdjust = () => {
+    const target = targetSelect.value;
+    const el = ensureBgEl(target);
+    el.dataset.fit = document.getElementById("bg-fit").value;
+    el.dataset.opacity = document.getElementById("bg-opacity").value;
+    el.dataset.dark = document.getElementById("bg-dark").value;
+    applyBackgrounds();
+    updateBgDialog(true);
+  };
+  ["bg-fit", "bg-opacity", "bg-dark"].forEach((id) => {
+    const control = document.getElementById(id);
+    control.addEventListener("input", applyAdjust);
+    control.addEventListener("change", () => {
+      applyAdjust();
+      queueSave(true);
+    });
+  });
+}
+
+const bgFileInput = document.createElement("input");
+bgFileInput.id = "bg-file-input";
+bgFileInput.type = "file";
+bgFileInput.accept = "image/*";
+bgFileInput.style.display = "none";
+document.body.appendChild(bgFileInput);
+let bgUploadTarget = "page";
+
+bgFileInput.addEventListener("change", async () => {
+  const file = bgFileInput.files && bgFileInput.files[0];
+  const target = bgUploadTarget;
+  bgFileInput.value = "";
+  if (!file || !target) return;
+  setStatus("saving", "Procesando fondo…");
+  try {
+    const src = await prepareBackgroundFile(file);
+    const id = newAssetId(`bg-${target}`);
+    await storeBackgroundAsset(id, src);
+    setBgSource(target, "asset", id);
+    await saveNow();
+    if (document.getElementById("bg-target")?.value === target) updateBgDialog();
+    toast("Fondo actualizado. Ajusta la opacidad o el filtro oscuro si hace falta.", 5000);
+  } catch (error) {
+    console.error(error);
+    setStatus("error", "No se pudo guardar el fondo");
+    toast(error.message || "No se pudo procesar el fondo.", 6500);
+  }
+});
+
+/* ───────────────────────── Estructura dinámica ───────────────────────── */
+const ICON_COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+const ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>';
+
+function newAssetId(prefix = "foto") {
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function roman(number) {
+  const table = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]];
+  let rest = Math.max(1, Number(number) || 1);
+  let out = "";
+  table.forEach(([value, symbol]) => {
+    while (rest >= value) { out += symbol; rest -= value; }
+  });
+  return out;
+}
+
+function groupByParent(nodes) {
+  const groups = new Map();
+  nodes.forEach((node) => {
+    const parent = node.parentElement;
+    if (!parent) return;
+    if (!groups.has(parent)) groups.set(parent, []);
+    groups.get(parent).push(node);
+  });
+  return groups;
+}
+
+function ensureListGroup(groups, parent, selector) {
+  if (parent && !groups.has(parent)) groups.set(parent, $$(selector, parent));
+}
+
+function stripEditorControls(node) {
+  node.querySelectorAll("[data-editor-ui]").forEach((el) => el.remove());
+  node.querySelectorAll(".has-tools").forEach((el) => el.classList.remove("has-tools"));
+  node.querySelectorAll("[contenteditable]").forEach((el) => el.removeAttribute("contenteditable"));
+}
+
+function syncCustomNav() {
+  const navList = document.querySelector("nav ul");
+  if (!navList) return;
+  navList.querySelectorAll("[data-custom-nav]").forEach((li) => li.remove());
+  $$("[data-custom-section]", app).forEach((section) => {
+    if (!section.id) section.id = newAssetId("apartado");
+    const heading = section.querySelector("h2, h3") || section.querySelector(".tag");
+    let label = (heading && heading.textContent ? heading.textContent : "Apartado").replace(/\s+/g, " ").trim();
+    if (label.length > 24) label = label.slice(0, 23).trimEnd() + "…";
+    const li = document.createElement("li");
+    li.dataset.customNav = "true";
+    const link = document.createElement("a");
+    link.href = "#" + section.id;
+    link.textContent = label || "Apartado";
+    li.appendChild(link);
+    navList.appendChild(li);
+  });
+}
+
+function makeAddButton(label, onAdd, chip = false) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = chip ? "addb chip-add" : "addb";
+  button.dataset.editorUi = "add";
+  button.contentEditable = "false";
+  button.textContent = label;
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onAdd();
+  });
+  return button;
+}
+
+function addAfter(target, label, onAdd, chip = false) {
+  const button = makeAddButton(label, onAdd, chip);
+  target.insertAdjacentElement("afterend", button);
+  return button;
+}
+
+function addInside(target, label, onAdd, chip = false) {
+  const button = makeAddButton(label, onAdd, chip);
+  target.appendChild(button);
+  return button;
+}
+
+function addListButton(parent, items, label, onAdd) {
+  if (items.length) addAfter(items[items.length - 1], label, onAdd);
+  else addInside(parent, label, onAdd);
+}
+
+function makeToolButton(action, title, icon) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.dataset.act = action;
+  button.title = title;
+  button.setAttribute("aria-label", title);
+  button.contentEditable = "false";
+  button.innerHTML = icon;
+  return button;
+}
+
+function attachItemTools(item, options) {
+  item.classList.add("has-tools");
+  const tools = document.createElement("div");
+  tools.className = "editor-item-tools";
+  tools.dataset.editorUi = "item";
+  tools.contentEditable = "false";
+  if (options.duplicate) {
+    const button = makeToolButton("dup", "Duplicar", ICON_COPY);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      options.duplicate(item);
+    });
+    tools.appendChild(button);
+  }
+  if (options.remove) {
+    const button = makeToolButton("del", "Eliminar", ICON_TRASH);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      options.remove(item);
+    });
+    tools.appendChild(button);
+  }
+  item.appendChild(tools);
+}
+
+function confirmDelete(title, onConfirm) {
+  openDialog(`
+    <div class="lab">Confirmar</div>
+    <h3>${esc(title)}</h3>
+    <p class="hint">Se quitará de la página para todos los lectores. Esta acción no se puede deshacer.</p>
+    <div class="dlg-actions">
+      <button type="button" data-close>Cancelar</button>
+      <button type="button" class="danger" id="confirm-delete">Eliminar</button>
+    </div>
+  `);
+  $("#confirm-delete").addEventListener("click", () => {
+    closeDialog();
+    onConfirm();
+  });
+}
+
+function deleteItem(item, noun) {
+  confirmDelete(`Eliminar ${noun}`, () => {
+    const parent = item.parentElement;
+    item.remove();
+    if (parent && noun === "valor") renumberValues(parent);
+    renderEditorUI();
+    queueSave(true);
+    toast("Elemento eliminado.");
+  });
+}
+
+function copyCloneAssets(clone) {
+  const nodes = Array.from(clone.querySelectorAll("[data-a]"));
+  if (!nodes.length) return;
+  const newIds = new Map();
+  const sources = new Map();
+  nodes.forEach((node) => {
+    const oldId = node.dataset.a;
+    if (!oldId) return;
+    if (!newIds.has(oldId)) newIds.set(oldId, newAssetId("foto"));
+    const img = node.tagName === "IMG" ? node : node.querySelector("img");
+    if (!sources.has(oldId)) {
+      if (assets[oldId]) sources.set(oldId, assets[oldId]);
+      else if (img && /^data:image\//.test(img.getAttribute("src") || "")) sources.set(oldId, img.getAttribute("src"));
+    }
+    node.dataset.a = newIds.get(oldId);
+    if (img) img.removeAttribute("src");
+  });
+  newIds.forEach((newId, oldId) => {
+    const src = sources.get(oldId);
+    if (!src) return;
+    assets[newId] = src;
+    if (cloudActive && fs && db) {
+      fs.setDoc(
+        fs.doc(db, DOC_COLLECTION, DOC_ID, "assets", newId),
+        { src, editKey: EDIT_KEY, updatedAt: fs.serverTimestamp() },
+        { merge: true }
+      ).catch((error) => {
+        console.error(error);
+        toast("La foto se duplicó, pero no se pudo sincronizar en la nube.", 5000);
+      });
+    } else {
+      safeSet(LS_ASSET + newId, src);
+    }
+    paintAsset(newId);
+  });
+}
+
+function duplicateItem(item, after) {
+  const clone = item.cloneNode(true);
+  stripEditorControls(clone);
+  item.insertAdjacentElement("afterend", clone);
+  if (after) after(clone);
+  copyCloneAssets(clone);
+  renderEditorUI();
+  queueSave(true);
+  toast("Elemento duplicado.");
+  return clone;
+}
+
+function renumberValues(scope = app) {
+  const groups = groupByParent($$(".val", scope));
+  groups.forEach((items) => {
+    items.forEach((item, index) => {
+      const numeral = item.querySelector("i");
+      if (numeral) numeral.textContent = roman(index + 1);
+    });
+  });
+}
+
+function addTeamCard(team) {
+  const id = newAssetId("team");
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `<div class="ph" data-a="${id}" title="Foto">👤</div><h4>Nombre Apellido</h4><small>[Carrera]</small><p>Breve reseña: intereses, motivación ética y aporte al equipo.</p><a class="li" href="https://linkedin.com/in/usuario" target="_blank" rel="noopener">LinkedIn</a>`;
+  team.appendChild(card);
+  renderEditorUI();
+  queueSave(true);
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+  toast("Integrante agregado. Haz clic en la foto para subir su imagen.");
+}
+
+function resetCardContent(card) {
+  const heading = card.querySelector("h4, h5");
+  if (heading) heading.textContent = "Nueva casilla";
+  else {
+    const label = card.querySelector(".lab");
+    if (label) label.textContent = "Nueva casilla";
+  }
+  card.querySelectorAll("p").forEach((paragraph) => {
+    paragraph.textContent = "Escribe aquí el contenido de esta casilla.";
+  });
+  card.querySelectorAll("a.li").forEach((link) => link.remove());
+}
+
+function addCardTo(container) {
+  const cards = $$(":scope > .card", container);
+  const last = cards[cards.length - 1];
+  let card;
+  if (last) {
+    card = last.cloneNode(true);
+    stripEditorControls(card);
+    resetCardContent(card);
+  } else {
+    card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = '<div class="lab">Nueva casilla</div><p>Escribe aquí el contenido de esta casilla.</p>';
+  }
+  container.appendChild(card);
+  copyCloneAssets(card);
+  renderEditorUI();
+  queueSave(true);
+  card.scrollIntoView({ behavior: "smooth", block: "center" });
+  toast("Casilla agregada.");
+}
+
+function addValue(parent) {
+  const items = $$(":scope > .val", parent);
+  const value = document.createElement("div");
+  value.className = "val";
+  value.innerHTML = `<i>${roman(items.length + 1)}</i><span>[Nuevo valor] · [Tipo de valor]</span>`;
+  if (items.length) items[items.length - 1].insertAdjacentElement("afterend", value);
+  else parent.appendChild(value);
+  renumberValues(parent);
+  renderEditorUI();
+  queueSave(true);
+  toast("Valor agregado.");
+}
+
+function addTextBlock(parent, kind) {
+  const isAnalysis = kind === "an";
+  const className = isAnalysis ? "an" : "blk";
+  const items = $$(`:scope > .${className}`, parent);
+  const block = document.createElement("div");
+  block.className = className;
+  block.innerHTML = isAnalysis
+    ? '<div class="lab">Nuevo punto de análisis</div><p>Escribe aquí el análisis de este punto.</p>'
+    : '<h4>Nuevo bloque</h4><p>Escribe aquí el contenido de este bloque.</p>';
+  if (items.length) items[items.length - 1].insertAdjacentElement("afterend", block);
+  else parent.appendChild(block);
+  renderEditorUI();
+  queueSave(true);
+  toast(isAnalysis ? "Punto agregado." : "Bloque agregado.");
+}
+
+function addChip(chips) {
+  const chip = document.createElement("span");
+  chip.textContent = "[Nueva etiqueta]";
+  const addButton = chips.querySelector('[data-editor-ui="add"]');
+  chips.insertBefore(chip, addButton || null);
+  renderEditorUI();
+  queueSave(true);
+  toast("Etiqueta agregada.");
+}
+
+function decorateChip(chip) {
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.className = "chip-x";
+  remove.dataset.editorUi = "chip";
+  remove.contentEditable = "false";
+  remove.title = "Eliminar etiqueta";
+  remove.setAttribute("aria-label", "Eliminar etiqueta");
+  remove.textContent = "×";
+  remove.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    deleteItem(chip, "etiqueta");
+  });
+  chip.appendChild(remove);
+}
+
+function addSection(footer) {
+  const section = document.createElement("section");
+  section.id = newAssetId("apartado");
+  section.dataset.customSection = "true";
+  section.innerHTML = `
+    <div class="tag">Nuevo apartado · contenido editable</div>
+    <h2>Nuevo <em>apartado</em></h2>
+    <p class="lead">Describe aquí el propósito de este apartado y el contenido que quieres compartir.</p>
+    <div class="cols">
+      <div class="card"><div class="lab">Nueva casilla</div><p>Escribe aquí el contenido de esta casilla.</p></div>
+    </div>`;
+  footer.before(section);
+  renderEditorUI();
+  queueSave(true);
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  toast("Apartado agregado. Edita el título y agrega más casillas.");
+}
+
+function duplicateSection(section) {
+  const clone = section.cloneNode(true);
+  stripEditorControls(clone);
+  clone.id = newAssetId("apartado");
+  section.insertAdjacentElement("afterend", clone);
+  copyCloneAssets(clone);
+  renderEditorUI();
+  queueSave(true);
+  clone.scrollIntoView({ behavior: "smooth", block: "start" });
+  toast("Apartado duplicado.");
+}
+
+function decorateCustomSection(section) {
+  if (!section.id) section.id = newAssetId("apartado");
+  const tools = document.createElement("div");
+  tools.className = "editor-section-tools";
+  tools.dataset.editorUi = "section";
+  tools.contentEditable = "false";
+  const duplicate = document.createElement("button");
+  duplicate.type = "button";
+  duplicate.dataset.act = "dup";
+  duplicate.innerHTML = ICON_COPY + "<span>Duplicar</span>";
+  duplicate.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    duplicateSection(section);
+  });
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.dataset.act = "del";
+  remove.innerHTML = ICON_TRASH + "<span>Eliminar</span>";
+  remove.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    deleteItem(section, "apartado");
+  });
+  tools.append(duplicate, remove);
+  section.appendChild(tools);
+}
+
+function renderEditorUI() {
+  if (!editingOn) return;
+  $$("[data-editor-ui]", app).forEach((el) => el.remove());
+  $$(".has-tools", app).forEach((el) => el.classList.remove("has-tools"));
+
+  const team = document.getElementById("team");
+  if (team) {
+    $$(":scope > .card", team).forEach((card) => {
+      attachItemTools(card, {
+        duplicate: (item) => duplicateItem(item),
+        remove: (item) => deleteItem(item, "integrante")
+      });
+    });
+    addAfter(team, "＋ Agregar integrante / casilla", () => addTeamCard(team));
+  }
+
+  $$(".grid5, .cols", app).forEach((container) => {
+    if (container === team) return;
+    $$(":scope > .card", container).forEach((card) => {
+      attachItemTools(card, {
+        duplicate: (item) => duplicateItem(item),
+        remove: (item) => deleteItem(item, "casilla")
+      });
+    });
+    addAfter(container, "＋ Agregar casilla", () => addCardTo(container));
+  });
+
+  const values = groupByParent($$(".val", app));
+  const manifiesto = $("#manifiesto .two");
+  if (manifiesto) ensureListGroup(values, manifiesto.children[0], ":scope > .val");
+  values.forEach((items, parent) => {
+    items.forEach((item) => {
+      attachItemTools(item, {
+        duplicate: (target) => { duplicateItem(target); renumberValues(parent); },
+        remove: (target) => deleteItem(target, "valor")
+      });
+    });
+    addListButton(parent, items, "＋ Agregar valor", () => addValue(parent));
+  });
+
+  const blocks = groupByParent($$(".blk", app));
+  if (manifiesto) ensureListGroup(blocks, manifiesto.children[1], ":scope > .blk");
+  blocks.forEach((items, parent) => {
+    items.forEach((item) => {
+      attachItemTools(item, {
+        duplicate: (target) => duplicateItem(target),
+        remove: (target) => deleteItem(target, "bloque")
+      });
+    });
+    addListButton(parent, items, "＋ Agregar bloque", () => addTextBlock(parent, "blk"));
+  });
+
+  const analyses = groupByParent($$(".an", app));
+  const video = $("#video .two");
+  if (video) ensureListGroup(analyses, video.children[1], ":scope > .an");
+  analyses.forEach((items, parent) => {
+    items.forEach((item) => {
+      attachItemTools(item, {
+        duplicate: (target) => duplicateItem(target),
+        remove: (target) => deleteItem(target, "punto")
+      });
+    });
+    addListButton(parent, items, "＋ Agregar punto", () => addTextBlock(parent, "an"));
+  });
+
+  $$(".chips", app).forEach((chips) => {
+    $$(":scope > span", chips).forEach(decorateChip);
+    addInside(chips, "＋ Agregar etiqueta", () => addChip(chips), true);
+  });
+
+  $$("[data-custom-section]", app).forEach(decorateCustomSection);
+
+  const footer = $("footer", app);
+  if (footer) footer.before(makeAddButton("＋ Agregar apartado nuevo", () => addSection(footer)));
+
+  syncCustomNav();
 }
 
 function queueSave(immediate = false) {
@@ -838,9 +1829,10 @@ if (editingOn) {
   }
 }
 
-app.addEventListener("input", () => {
+app.addEventListener("input", (event) => {
   if (!editingOn) return;
   lastInputAt = Date.now();
+  if (event.target.closest && event.target.closest("[data-custom-section]")) syncCustomNav();
   queueSave();
 });
 
@@ -873,6 +1865,18 @@ app.addEventListener("click", (event) => {
     event.preventDefault();
     editEmbed(slot);
   }
+});
+
+colorBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  openColorDialog();
+});
+
+bgBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  openBackgroundDialog();
 });
 
 exitEdit.addEventListener("click", async (event) => {
@@ -993,6 +1997,7 @@ async function initCloud() {
           paintAsset(change.doc.id);
         }
       });
+      applyBackgrounds();
     }, (error) => console.warn("No se pudieron cargar las fotos:", error));
 
     fs.onSnapshot(portfolioRef, handlePortfolioSnapshot, (error) => {
@@ -1046,6 +2051,7 @@ function initLocal() {
 }
 
 loadLocalAssets();
+applyBackgrounds();
 
 if (CLOUD_CONFIGURED) {
   initCloud();

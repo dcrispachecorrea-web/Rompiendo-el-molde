@@ -42,6 +42,19 @@ a.li{display:inline-block;margin-top:10px;font-size:.7rem;font-weight:600;color:
 .slot{width:100%;height:auto;aspect-ratio:16/9;background:var(--cream);border:1px dashed var(--bd);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mu);font-size:.8rem;padding:16px;border-radius:6px;overflow:hidden}.slot iframe,.slot video{width:100%!important;height:100%!important;border:0;display:block}.slot video{object-fit:contain;background:#000}.slot audio{width:100%}
 .slot.short,.slot.wide{aspect-ratio:16/9;min-height:0}
 .slot.media-filled{padding:0;border:0;background:#000}
+.art-media{width:100%;margin:0 0 14px;border-radius:8px;overflow:hidden;background:var(--cream)}
+.art-media img{display:block;width:100%;height:auto;border-radius:8px}
+.art-media img:not([src]),.art-media img[src=""]{display:none}
+body:not(.mode-edit) .art-media.is-empty{display:none}
+.mode-edit .art-media{outline:2px dashed var(--gold);outline-offset:-2px;cursor:pointer}
+.mode-edit .art-media.is-empty{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;font:600 .68rem 'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.mode-edit .art-media.is-empty::before{content:"Imagen de la capa"}
+.art-actions{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 14px}
+body:not(.mode-edit) .art-actions{display:none}
+.art-actions button{font:600 .65rem 'DM Sans',sans-serif;letter-spacing:.04em;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--navy);cursor:pointer}
+.art-actions button:hover{border-color:var(--gold);color:var(--gold)}
+.art-actions button[data-art-remove]{color:var(--danger)}
+.art-actions button[data-art-remove]:hover{border-color:var(--danger)}
 .an{padding:14px 0;border-bottom:1px solid var(--bd)}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
 footer{background:#1b3a6b;color:#ffffffa0;padding:32px 6vw calc(32px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.76rem;line-height:1.7}
@@ -304,8 +317,8 @@ body.has-section-bg #app > section::after{content:"";position:absolute;inset:0;z
 <p class="lead">Una sola pieza visual con dos capas integradas: el cuidado del otro y la responsabilidad con las generaciones futuras.</p>
 <div class="slot wide" data-empty="Toca aquí (modo edición) para pegar el enlace o embed de Genially o Canva">🗺️ Toca aquí (modo edición) para pegar el enlace o embed de Genially o Canva</div>
 <div class="cols">
-<div class="card"><div class="lab">✦ Capa 1 · Semana 13 · Ética del cuidado</div><p>Fotografía o pieza artística sobre la población vulnerable identificada y el compromiso de cuidado del equipo.</p><p style="margin-top:10px;color:var(--gold);font-weight:600">Compromiso: [Redactar compromiso concreto de cuidado]</p></div>
-<div class="card"><div class="lab">✦ Capa 2 · Semana 14 · Ecoética</div><p>Imagen generada con IA que une la población vulnerable con el conflicto ambiental y plantea la responsabilidad con las generaciones futuras.</p><p style="margin-top:10px;color:var(--gold);font-weight:600">Compromiso: [Redactar compromiso generacional concreto]</p></div>
+<div class="card"><div class="lab">✦ Capa 1 · Semana 13 · Ética del cuidado</div><p>Fotografía o pieza artística sobre la población vulnerable identificada y el compromiso de cuidado del equipo.</p><div class="art-media is-empty" data-art="capa"></div><p style="margin-top:10px;color:var(--gold);font-weight:600">Compromiso: [Redactar compromiso concreto de cuidado]</p></div>
+<div class="card"><div class="lab">✦ Capa 2 · Semana 14 · Ecoética</div><p>Imagen generada con IA que une la población vulnerable con el conflicto ambiental y plantea la responsabilidad con las generaciones futuras.</p><div class="art-media is-empty" data-art="capa"></div><p style="margin-top:10px;color:var(--gold);font-weight:600">Compromiso: [Redactar compromiso generacional concreto]</p></div>
 </div>
 </section>
 
@@ -402,6 +415,7 @@ let pendingSave = false;
 let pendingRemote = null;
 let conflictNotified = false;
 let photoTarget = null;
+let artFileTarget = null;
 
 /* ───────────────────────── Utilidades ───────────────────────── */
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -492,16 +506,22 @@ function hydrateAssets() {
 function paintAsset(id) {
   const src = assets[id];
   if (!src) return;
-  $$(`.ph[data-a="${id}"]`).forEach((ph) => {
-    let img = ph.querySelector(`img[data-a="${id}"]`);
+  $$(`.ph[data-a="${id}"], .art-media[data-a="${id}"]`).forEach((box) => {
+    const isArt = box.classList.contains("art-media");
+    let img = box.querySelector(`img[data-a="${id}"]`);
     if (!img) {
-      ph.textContent = "";
+      if (isArt) box.querySelectorAll("img").forEach((item) => item.remove());
+      else box.textContent = "";
       img = document.createElement("img");
       img.dataset.a = id;
-      img.alt = "Foto del integrante";
-      ph.appendChild(img);
+      img.alt = isArt ? artAlt(box) : "Foto del integrante";
+      box.appendChild(img);
     }
     if (img.getAttribute("src") !== src) img.src = src;
+    if (isArt) {
+      markArtMedia(box);
+      refreshArtActions(box);
+    }
   });
 }
 
@@ -595,14 +615,243 @@ photoInput.addEventListener("change", async () => {
   }
 });
 
+/* ───────────────────────── Imagen de las tarjetas ───────────────────────── */
+function artImage(media) {
+  const img = media && media.querySelector("img");
+  return img && img.getAttribute("src") ? img : null;
+}
+
+function artAlt(media) {
+  const card = media && media.closest(".card");
+  const label = card && card.querySelector(".lab");
+  const text = label ? label.textContent.replace(/^✦\s*/, "").trim() : "";
+  return text ? `Imagen: ${text}` : "Imagen de la tarjeta";
+}
+
+function markArtMedia(media) {
+  if (!media) return;
+  media.classList.toggle("is-empty", !artImage(media));
+}
+
+function refreshArtActions(media) {
+  if (!editingOn || !media) return;
+  const actions = media.nextElementSibling;
+  if (!actions || !actions.classList.contains("art-actions")) return;
+  const filled = Boolean(artImage(media));
+  const upload = actions.querySelector("[data-art-upload]");
+  const url = actions.querySelector("[data-art-url]");
+  const remove = actions.querySelector("[data-art-remove]");
+  if (upload) upload.textContent = filled ? "Cambiar imagen" : "Subir imagen";
+  if (url) url.textContent = filled ? "Cambiar URL" : "Pegar URL";
+  if (remove) remove.hidden = !filled;
+}
+
+function renderArtActions(media) {
+  if (!editingOn || !media) return;
+  let actions = media.nextElementSibling;
+  if (!actions || !actions.classList.contains("art-actions")) {
+    actions = document.createElement("div");
+    actions.className = "art-actions";
+    media.after(actions);
+  }
+  actions.innerHTML = "";
+  actions.dataset.editorUi = "art";
+  actions.contentEditable = "false";
+
+  const upload = document.createElement("button");
+  upload.type = "button";
+  upload.dataset.artUpload = "";
+  upload.textContent = "Subir imagen";
+  upload.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    artFileTarget = media;
+    artFileInput.click();
+  });
+
+  const url = document.createElement("button");
+  url.type = "button";
+  url.dataset.artUrl = "";
+  url.textContent = "Pegar URL";
+  url.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    openArtUrlDialog(media);
+  });
+
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.dataset.artRemove = "";
+  remove.textContent = "Quitar";
+  remove.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    clearArtImage(media);
+    queueSave(true);
+    toast("Imagen quitada.");
+  });
+
+  actions.append(upload, url, remove);
+  refreshArtActions(media);
+}
+
+function setArtAsset(media, id, src) {
+  if (!media || !media.isConnected) return;
+  media.dataset.a = id;
+  media.querySelectorAll("img").forEach((img) => img.remove());
+  const img = document.createElement("img");
+  img.dataset.a = id;
+  img.alt = artAlt(media);
+  img.src = src;
+  media.appendChild(img);
+  markArtMedia(media);
+  refreshArtActions(media);
+}
+
+function setArtUrl(media, value) {
+  let raw = String(value || "").trim();
+  if (!raw) throw new Error("Pega un enlace directo a una imagen.");
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(raw)) raw = "https://" + raw;
+  const src = validBgUrl(raw);
+  if (!src) throw new Error("Usa un enlace http(s) válido a una imagen.");
+  media.removeAttribute("data-a");
+  media.querySelectorAll("img").forEach((img) => img.remove());
+  const img = document.createElement("img");
+  img.alt = artAlt(media);
+  img.addEventListener("error", () => toast("La URL no parece mostrar una imagen válida.", 5000));
+  img.src = src;
+  media.appendChild(img);
+  markArtMedia(media);
+  refreshArtActions(media);
+  return src;
+}
+
+function clearArtImage(media) {
+  if (!media) return;
+  media.removeAttribute("data-a");
+  media.querySelectorAll("img").forEach((img) => img.remove());
+  media.classList.add("is-empty");
+  refreshArtActions(media);
+}
+
+async function storeArtAsset(id, src) {
+  if (cloudActive && fs && db) {
+    await fs.setDoc(
+      fs.doc(db, DOC_COLLECTION, DOC_ID, "assets", id),
+      { src, editKey: EDIT_KEY, updatedAt: fs.serverTimestamp(), kind: "card" },
+      { merge: true }
+    );
+  } else {
+    safeSet(LS_ASSET + id, src);
+    if (safeGet(LS_ASSET + id) !== src) throw new Error("No hay espacio local para la imagen. Usa un enlace directo.");
+  }
+  assets[id] = src;
+}
+
+function openArtUrlDialog(media) {
+  if (!editingOn || !media) return;
+  const current = media.querySelector("img:not([data-a])");
+  const currentUrl = (current && current.getAttribute("src")) || "";
+  openDialog(`
+    <div class="lab">Imagen de la tarjeta</div>
+    <h3>Pegar URL de imagen</h3>
+    <p class="hint">Usa un enlace directo http(s) que muestre una imagen. Para subir un archivo desde la computadora, usa "Subir imagen" o "Cambiar imagen".</p>
+    <label class="field">Enlace directo
+      <input id="art-url" type="text" value="${esc(currentUrl)}" placeholder="https://.../imagen.jpg">
+    </label>
+    <div class="dlg-actions">
+      <button type="button" data-close>Cancelar</button>
+      <button type="button" class="ok" id="art-url-save">Usar URL</button>
+    </div>
+  `);
+  const save = () => {
+    if (!media.isConnected) { closeDialog(); return; }
+    try {
+      setArtUrl(media, $("#art-url").value);
+      closeDialog();
+      queueSave(true);
+      toast("Imagen actualizada.");
+    } catch (error) {
+      toast(error.message || "No se pudo usar esa URL.");
+    }
+  };
+  $("#art-url-save").addEventListener("click", save);
+  $("#art-url").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      save();
+    }
+  });
+}
+
+function ensureArtSpaces() {
+  const section = document.getElementById("infografia");
+  if (!section) return;
+  $$(".cols > .card", section).forEach((card) => {
+    let media = card.querySelector(":scope > .art-media");
+    if (!media) {
+      media = document.createElement("div");
+      media.className = "art-media is-empty";
+      media.dataset.art = "capa";
+      const paragraphs = $$(":scope > p", card);
+      const compromise = paragraphs.find((p) => /^\s*compromiso\s*:/i.test(p.textContent || ""));
+      const target = compromise || paragraphs[paragraphs.length - 1];
+      if (target) target.before(media);
+      else card.appendChild(media);
+    }
+    if (!media.dataset.art) media.dataset.art = "capa";
+    markArtMedia(media);
+  });
+}
+
+const artFileInput = document.createElement("input");
+artFileInput.id = "art-file-input";
+artFileInput.type = "file";
+artFileInput.accept = "image/*";
+artFileInput.style.display = "none";
+document.body.appendChild(artFileInput);
+
+artFileInput.addEventListener("change", async () => {
+  const file = artFileInput.files && artFileInput.files[0];
+  const media = artFileTarget;
+  artFileInput.value = "";
+  artFileTarget = null;
+  if (!file || !media) return;
+  if (!(file.type || "").startsWith("image/")) {
+    toast("Selecciona un archivo de imagen.");
+    return;
+  }
+  if (file.size > 20 * 1024 * 1024) {
+    toast("La imagen supera 20 MB. Usa una versión más liviana o un enlace directo.", 5000);
+    return;
+  }
+  setStatus("saving", "Procesando imagen…");
+  try {
+    const src = await compressImage(file);
+    if (src.length > 900000) throw new Error("La imagen comprimida sigue siendo pesada. Usa una más liviana o un enlace directo.");
+    const id = newAssetId("imagen");
+    await storeArtAsset(id, src);
+    if (!media.isConnected) return;
+    setArtAsset(media, id, src);
+    await saveNow();
+    toast("Imagen actualizada.");
+  } catch (error) {
+    console.error(error);
+    setStatus("error", "No se pudo guardar la imagen");
+    toast(error.message || "No se pudo guardar la imagen. Usa una imagen más liviana o un enlace directo.", 5500);
+  }
+});
+
 /* ───────────────────────── Contenido ───────────────────────── */
 function applyContent(html) {
   hideSelectionToolbar();
   app.innerHTML = sanitizeHTML(html);
+  ensureArtSpaces();
   applyTheme();
   if (editingOn) activateEditor();
   else syncCustomNav();
   hydrateAssets();
+  $$(".art-media", app).forEach(markArtMedia);
   markSlots();
   applyBackgrounds();
 }
@@ -1499,6 +1748,11 @@ function resetCardContent(card) {
     paragraph.textContent = "Escribe aquí el contenido de esta casilla.";
   });
   card.querySelectorAll("a.li").forEach((link) => link.remove());
+  card.querySelectorAll(".art-media").forEach((media) => {
+    media.removeAttribute("data-a");
+    media.querySelectorAll("img").forEach((img) => img.remove());
+    media.classList.add("is-empty");
+  });
 }
 
 function addCardTo(container) {
@@ -1641,6 +1895,7 @@ function renderEditorUI() {
   hideSelectionToolbar();
   $$("[data-editor-ui]", app).forEach((el) => el.remove());
   $$(".has-tools", app).forEach((el) => el.classList.remove("has-tools"));
+  ensureArtSpaces();
 
   const team = document.getElementById("team");
   if (team) {
@@ -1662,6 +1917,11 @@ function renderEditorUI() {
       });
     });
     addAfter(container, "＋ Agregar casilla", () => addCardTo(container));
+  });
+
+  $$(".art-media", app).forEach((media) => {
+    markArtMedia(media);
+    renderArtActions(media);
   });
 
   const values = groupByParent($$(".val", app));
@@ -2066,6 +2326,13 @@ app.addEventListener("click", (event) => {
     event.preventDefault();
     photoTarget = photo.dataset.a;
     photoInput.click();
+    return;
+  }
+  const art = event.target.closest(".art-media");
+  if (art) {
+    event.preventDefault();
+    artFileTarget = art;
+    artFileInput.click();
     return;
   }
   const slot = event.target.closest(".slot");
